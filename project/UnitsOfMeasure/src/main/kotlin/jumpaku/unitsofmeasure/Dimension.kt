@@ -2,14 +2,22 @@ package jumpaku.unitsofmeasure
 
 sealed class Dimension {
 
-    protected abstract val map: Map<Base, Int>
+    protected class Element
 
-    class Base: Dimension() {
-        override val map = mapOf(this to 1)
+    protected abstract val map: Map<Element, Int>
+
+    protected class Base: Dimension() {
+        override val map = mapOf(Element() to 1)
     }
 
-    class Derived(map: Map<Base, Int>): Dimension() {
-        override val map: Map<Base, Int> = simplifyMap(map)
+    protected class Derived(map: Map<Element, Int>): Dimension() {
+
+        constructor(vararg dimensions: Dimension): this(
+                dimensions.map { it.map }
+                        .fold(mapOf<Element, Int>()){ acc, m -> mergeMap(acc, m) }
+                        .let { simplifyMap(it) })
+
+        override val map: Map<Element, Int> = simplifyMap(map)
     }
 
     infix fun pow(index: Int): Dimension = Derived(map.mapValues { (_, v) -> v*index })
@@ -18,16 +26,29 @@ sealed class Dimension {
 
     operator fun div(d: Dimension): Dimension = times(d pow -1)
 
+    override fun equals(other: Any?): Boolean = when {
+        this === other -> true
+        other !is Dimension -> false
+        else -> map == other.map
+    }
+
+    override fun hashCode(): Int = map.hashCode()
+
+
     companion object {
 
-        internal fun simplifyMap(m: Map<Base, Int>): Map<Base, Int> = m.filter { (_, v) -> v != 0 }
+        operator fun invoke(): Dimension = Base()
 
-        internal fun mergeMap(m0: Map<Base, Int>, m1: Map<Base, Int>): Map<Base, Int> =
+        fun dimensionless(): Dimension = Derived()
+
+        fun compose(dimension: Dimension, vararg dimensions: Dimension): Dimension = Derived(dimension, *dimensions)
+
+        private fun simplifyMap(m: Map<Element, Int>): Map<Element, Int> = m.filter { (_, v) -> v != 0 }
+
+        private fun mergeMap(m0: Map<Element, Int>, m1: Map<Element, Int>): Map<Element, Int> =
                 (m0.toList() + m1.toList())
                         .groupBy { it.first }
                         .mapValues { (_, v) -> v.map { it.second }.sum() }
                         .run { simplifyMap(toMap()) }
-
-        fun equals(d0: Dimension, d1: Dimension): Boolean = d0.map == d1.map
     }
 }
