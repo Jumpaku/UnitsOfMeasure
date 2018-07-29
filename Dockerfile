@@ -1,8 +1,8 @@
 FROM zenika/alpine-kotlin:1.2-jdk8
 WORKDIR /home/project/UnitsOfMeasure
 
-RUN apk --update add --virtual=build-dependencies build-base git gradle
+RUN apk --update add git gradle
 COPY ./project/UnitsOfMeasure ./
-RUN cd UnitsOfMeasure && ./gradlew build
+RUN ./gradlew build
 
 CMD [ "bash" ]
