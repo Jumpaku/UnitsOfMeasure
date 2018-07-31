@@ -1,10 +1,15 @@
 version: "3"
 
 services:
+  
   dev:
-    build: ./
+    build: ./develop/
     container_name: dev
     volumes: 
-      - ./project:/home/project
-    ports:
-      - 8080:8080
+      - ./:/home/workdir
+
+  deploy:
+    build: ./deploy/
+    container_name: deploy
+    volumes: 
+      - ./:/home/workdir
