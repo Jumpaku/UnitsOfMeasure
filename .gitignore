@@ -2,7 +2,7 @@
 # Created by https://www.gitignore.io/api/java,macos,linux,gradle,kotlin,windows,intellij
 
 ### Intellij ###
-/project/UnitsOfMeasure/.idea/
+\.idea/
 *.iws
 out/
 
@@ -100,8 +100,8 @@ $RECYCLE.BIN/
 *.lnk
 
 ### Gradle ###
-/project/UnitsOfMeasure/.gradle/
-/project/UnitsOfMeasure/build/
+\.gradle/
+/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -115,6 +115,8 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
+
+# End of https://www.gitignore.io/api/java,macos,linux,gradle,kotlin,windows,intellij
 
 # End of https://www.gitignore.io/api/java,macos,linux,gradle,kotlin,windows,intellij
 scripts/
