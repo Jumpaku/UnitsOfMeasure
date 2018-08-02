@@ -2,9 +2,10 @@
 # Created by https://www.gitignore.io/api/java,macos,linux,gradle,kotlin,windows,intellij
 
 ### Intellij ###
-/project/UnitsOfMeasure/.idea/
+\.idea/
 *.iws
 out/
+*.iml
 
 ### Java ###
 # Compiled class file
@@ -100,8 +101,8 @@ $RECYCLE.BIN/
 *.lnk
 
 ### Gradle ###
-/project/UnitsOfMeasure/.gradle/
-/project/UnitsOfMeasure/build/
+\.gradle/
+build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -119,6 +120,10 @@ gradle-app.setting
 # End of https://www.gitignore.io/api/java,macos,linux,gradle,kotlin,windows,intellij
 scripts/
 
-project/UnitsOfMeasure/target/*
 
-project/UnitsOfMeasure/pom\.xml
+\.classpath
+\.project
+\.settings/
+bin/
+nexus-data/
+\.vscode/

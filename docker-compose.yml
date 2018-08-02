@@ -1,15 +1,10 @@
-version: "3"
+version: '3'
 
-services:
-  
-  dev:
-    build: ./develop/
-    container_name: dev
+services: 
+  nexus:
+    image: sonatype/nexus3
+    ports: 
+      - 8081:8081
+    container_name: nexus
     volumes: 
-      - ./:/home/workdir
-
-  deploy:
-    build: ./deploy/
-    container_name: deploy
-    volumes: 
-      - ./:/home/workdir
+      - './nexus-data:/nexus-data'
