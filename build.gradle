@@ -1,15 +1,14 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.2.50'
+    id 'maven'
 }
 
 group 'Jumpaku'
-version '1.0'
+version '2.0'
 
 repositories {
     mavenCentral()
 }
-
-apply plugin: 'maven'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -21,4 +20,30 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+
+def nexusUrl = "http://localhost:8081"
+repositories {
+    maven {
+        url "http://localhost:8081/repository/maven-public/"
+    }
+}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            
+            def args = project.hasProperty("args") ? project.findProperty("args").split(/\s+/) : []
+            def nexusUsername = args.size() >= 1 ? args[0] : ""
+            def nexusPassword = args.size() >= 2 ? args[1] : ""
+            println nexusUsername
+            println nexusPassword
+            repository(url: "${nexusUrl}/repository/maven-releases/") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            snapshotRepository(url: "${nexusUrl}/repository/maven-snapshots") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+        }
+    }
 }

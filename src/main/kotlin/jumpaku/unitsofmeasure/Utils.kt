@@ -1,4 +1,4 @@
-package jumpaku.unitofmeasure
+package jumpaku.unitsofmeasure
 
 
 internal fun <K> simplifyMap(m: Map<K, Int>): Map<K, Int> = m.filter { (_, v) -> v != 0 }

@@ -1,4 +1,4 @@
-package jumpaku.unitofmeasure
+package jumpaku.unitsofmeasure
 
 class Symbol private constructor(private val symbolMap: Map<Base, String>, private val structureMap: Map<Base, Int>) {
 
