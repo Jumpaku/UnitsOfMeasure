@@ -1,14 +1,15 @@
-package jumpaku.unitofmeasure
+package jumpaku.unitsofmeasure
 
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.*
 import org.junit.Test
 
-class DimensionTest {
+class SymbolTest {
 
-    val a = Dimension()
-    val b = Dimension()
-    val c = Dimension.ONE
+    val a = Symbol("a")
+    val b = Symbol("b")
+    val c = Symbol.empty
+    val d = Symbol("a")
 
     @Test
     fun testEquals() {
@@ -17,12 +18,19 @@ class DimensionTest {
         assertTrue(a == a)
         assertFalse(a == b)
         assertFalse(a == c)
+        assertFalse(a == d)
         assertFalse(b == a)
         assertTrue(b == b)
         assertFalse(b == c)
+        assertFalse(b == d)
         assertFalse(c == a)
         assertFalse(c == b)
         assertTrue(c == c)
+        assertFalse(c == d)
+        assertFalse(d == a)
+        assertFalse(d == b)
+        assertFalse(d == c)
+        assertTrue(d == d)
     }
 
     @Test
@@ -93,5 +101,29 @@ class DimensionTest {
         assertThat(c.pow(-1), `is`(c))
         assertThat(c.pow(-2), `is`(c))
         assertThat(c.pow(-3), `is`(c))
+    }
+
+
+    @Test
+    fun testGetSymbolString() {
+        println("GetSymbolString")
+
+        assertEquals(a.symbolString, "a")
+        assertEquals(b.symbolString, "b")
+        assertEquals(c.symbolString, "")
+        assertEquals(d.symbolString, "a")
+
+        assertEquals((a * b).symbolString, "a*b")
+        assertEquals((a / b).symbolString, "a*b^-1")
+        assertEquals((b / a).symbolString, "b*a^-1")
+        assertEquals((a * c).symbolString, "a")
+        assertEquals((a / c).symbolString, "a")
+        assertEquals((c / a).symbolString, "a^-1")
+
+        assertEquals((a.pow(-2)).symbolString, "a^-2")
+        assertEquals((a.pow(-1)).symbolString, "a^-1")
+        assertEquals((a.pow(0)).symbolString, "")
+        assertEquals((a.pow(1)).symbolString, "a")
+        assertEquals((a.pow(2)).symbolString, "a^2")
     }
 }
