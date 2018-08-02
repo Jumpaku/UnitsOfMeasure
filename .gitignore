@@ -5,6 +5,7 @@
 \.idea/
 *.iws
 out/
+*.iml
 
 ### Java ###
 # Compiled class file
@@ -101,7 +102,7 @@ $RECYCLE.BIN/
 
 ### Gradle ###
 \.gradle/
-/build/
+build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -117,3 +118,11 @@ gradle-app.setting
 
 
 # End of https://www.gitignore.io/api/java,macos,linux,gradle,kotlin,windows,intellij
+
+
+\.classpath
+\.project
+\.settings/
+bin/
+nexus-data/
+\.vscode/
