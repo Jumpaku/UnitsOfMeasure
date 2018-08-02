@@ -1,4 +1,4 @@
-package jumpaku.unitofmeasure
+package jumpaku.unitsofmeasure
 
 import kotlin.math.pow
 

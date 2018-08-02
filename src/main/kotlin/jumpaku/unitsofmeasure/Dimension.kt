@@ -1,4 +1,4 @@
-package jumpaku.unitofmeasure
+package jumpaku.unitsofmeasure
 
 class Dimension private constructor(val map: Map<Element, Int>) {
 

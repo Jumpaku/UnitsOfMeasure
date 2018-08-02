@@ -1,4 +1,4 @@
-package jumpaku.unitofmeasure
+package jumpaku.unitsofmeasure
 
 import org.hamcrest.CustomTypeSafeMatcher
 import org.hamcrest.core.Is.`is`
