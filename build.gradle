@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'Jumpaku'
-version '2.0'
+version '2.1'
 
 repositories {
     mavenCentral()
@@ -22,26 +22,22 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-
-def nexusUrl = "http://localhost:8081"
-repositories {
-    maven {
-        url "http://localhost:8081/repository/maven-public/"
-    }
-}
+/**
+ * To run uploadArchives,  ./gradlew uploadArchives -Pargs="`user id in nexus.jumpaku.net` `password`"  
+ */
 uploadArchives {
+    def args = project.hasProperty("args") ? project.findProperty("args").split(/\s+/) : []
+    def nexusUsername = args.size() >= 1 ? args[0] : "UNKNOWN USER"
+    def nexusPassword = args.size() >= 2 ? args[1] : "NO PASSWORD"
+    def nexusUrl = "https://nexus.jumpaku.net"
     repositories {
         mavenDeployer {
-            
-            def args = project.hasProperty("args") ? project.findProperty("args").split(/\s+/) : []
-            def nexusUsername = args.size() >= 1 ? args[0] : ""
-            def nexusPassword = args.size() >= 2 ? args[1] : ""
-            println nexusUsername
-            println nexusPassword
-            repository(url: "${nexusUrl}/repository/maven-releases/") {
-                authentication(userName: nexusUsername, password: nexusPassword)
+            def releaseUrl = "${nexusUrl}/repository/maven-releases/"
+             repository(url: releaseUrl) {
+                 authentication(userName: nexusUsername, password: nexusPassword)
             }
-            snapshotRepository(url: "${nexusUrl}/repository/maven-snapshots") {
+            def snapshotUrl = "${nexusUrl}/repository/maven-snapshots/"
+            snapshotRepository(url: snapshotUrl) {
                 authentication(userName: nexusUsername, password: nexusPassword)
             }
         }
